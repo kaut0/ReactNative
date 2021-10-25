@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import Tambah from './src/component/add';
+import Item from './src/component/flatlist';
 import Headers from './src/component/headers';
 
 
@@ -13,11 +14,26 @@ export default function App() {
     {nama:'namaaa', id:3},
   ])
 
-  const onPress = (text)=>{
-    setData((data)=>{
-      return [
+  const onPress = (id)=>{
+    setData((prevData)=>{
+      return prevData.filter(data=> data.id != id)
+    })
+  }
+
+  // const onPress = (text)=>{
+  //   setData((data)=>{
+  //     return [
+  //       ...data,
+  //       { nama: text, id: Math.random().toString() }
+  //     ]
+  //   })
+  // }
+
+  const TambahData = (text)=>{
+    setData((prevData)=>{
+      return[
         ...data,
-        { nama: text, id: Math.random().toString() }
+        {nama: text, id: Math.random().toString()}
       ]
     })
   }
@@ -26,9 +42,13 @@ export default function App() {
     <View style={styles.container}>
       <View style={styles.heading}>
       <Headers />
-        <Tambah onPress={onPress} />
+        <Tambah TambahData={TambahData} />
         <View style={styles.components}>
-            <FlatList data={data} />
+            <FlatList data={data} renderItem={({item})=>{
+             return <Item item={item} onPress={onPress} />
+            }}
+            keyExtractor={item => item.id}
+            />
         </View>
       </View>
     </View>
@@ -42,14 +62,6 @@ const styles = StyleSheet.create({
   },
   heading:{
     paddingTop: 40
-  },
-  components:{
-    backgroundColor: "orange"
-  }, 
-  item:{
-    marginTop: 20,
-    backgroundColor: 'blue',
-    color: 'red'
   }
 
 });

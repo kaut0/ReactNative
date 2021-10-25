@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, FlatList } from 'react-native';
 
 
-function Tambah({onPress}) {
+function Tambah({TambahData}) {
 
     const [text, setText] = useState('')
 
@@ -12,8 +12,8 @@ function Tambah({onPress}) {
 
     return ( 
         <View>
-            <TextInput placeholder='Tambahkan Text' onChange={()=>textInput(val)} style={styles.tambah} />
-            <Button title='Tambah' onPress={()=>onPress(text)} />
+            <TextInput placeholder='Tambahkan Text' style={styles.tambah} onChangeText={textInput} />
+            <Button title='Tambah' onPress={()=>TambahData(text)} />
         </View>
      );
 }

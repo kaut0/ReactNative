@@ -1,21 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-function Flatlist({data}) {
+function Item({item, onPress}) {
     return ( 
-        <View style={styles.data}>
-            <FlatList data={data} renderItem={({item})=>{
-              return <Text style={styles.item}>{item.nama}</Text>
-            }}
-            keyExtractor={item => item.id}
-            />
-        </View>
+        <TouchableOpacity onPress={()=>onPress(item.id)}>
+            <Text style={styles.data}>{item.nama}</Text>
+        </TouchableOpacity>
      );
 }
-export default Flatlist;
+export default Item;
 
 const styles = StyleSheet.create({
     data: {
-
+        padding: 16,
+        paddingTop: 12,
+        borderWidth: 1,
+        borderStyle: "dashed",
+        borderRadius: 10
     }
 })
