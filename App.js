@@ -1,39 +1,35 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
+import Tambah from './src/component/add';
+import Headers from './src/component/headers';
 
 
 export default function App() {
 
-  const [kata, setKata] = useState('Makan');
-  const [person, setPerson] = useState({ name: 'abang garong', age: 45 }) 
-  const [input, setInput] = useState(null);
+  const [data, setData] = useState([
+    {nama:'nama', id:1},
+    {nama:'namaa', id:2},
+    {nama:'namaaa', id:3},
+  ])
 
-  const onPress = ()=>{
-    setKata('Marimas')
-    setPerson({name: 'arjuna', age: 20})
-  }
-
-  const reset = ()=>{
-    setKata('makan')
-    setPerson({name: 'abang garong', age: 45})
-  }
-
-  const inputText = ()=>{
-    
+  const onPress = (text)=>{
+    setData((data)=>{
+      return [
+        ...data,
+        { nama: text, id: Math.random().toString() }
+      ]
+    })
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.textInput}>
-        <TextInput value={input}></TextInput>
-      </View>
-      <Text>{ kata }</Text>
-      <Text>Aku adalah {person.name} dan umurku adalah {person.age}</Text>
-      <View style={styles.buttonConatiner}>
-        <Button title='push' onPress={ onPress } />
-        <Text></Text>
-        <Button title='rest' onPress={ reset } />
+      <View style={styles.heading}>
+      <Headers />
+        <Tambah onPress={onPress} />
+        <View style={styles.components}>
+            <FlatList data={data} />
+        </View>
       </View>
     </View>
   );
@@ -42,17 +38,18 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#fff'
   },
-  buttonConatiner: {
-    marginTop: 10,
+  heading:{
+    paddingTop: 40
   },
-  textInput:{
-    borderColor: 'red',
-    borderRadius: 10,
-    padding: 20
+  components:{
+    backgroundColor: "orange"
+  }, 
+  item:{
+    marginTop: 20,
+    backgroundColor: 'blue',
+    color: 'red'
   }
 
 });
